@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrusel con Miniaturas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .carousel {
+      width: 300px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .carousel img {
+      width: 100%;
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    .buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .buttons button {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .buttons button:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .thumbnails img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 5px;
+    }
+    .thumbnails img.active {
+      border-color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel">
+    <img src="https://www.shutterstock.com/image-illustration/david-street-style-graphic-designtextile-600nw-2265632523.jpg" alt="Imagen 1" class="active">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbPvDW8gBfklrVaTSSY2hp6mRtTOqMrKKYWg&s" alt="Imagen 2">
+    <div class="buttons">
+      <button id="prev">Anterior</button>
+      <button id="next">Siguiente</button>
+    </div>
+  </div>
+  <div class="thumbnails">
+    <img src="https://www.shutterstock.com/image-illustration/david-street-style-graphic-designtextile-600nw-2265632523.jpg" alt="Miniatura 1" class="active">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbPvDW8gBfklrVaTSSY2hp6mRtTOqMrKKYWg&s" alt="Miniatura 2">
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.carousel img');
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    let currentIndex = 0;
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+      thumbnails.forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
+      });
+    }
+
+    prevButton.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+
+    nextButton.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+
+    thumbnails.forEach((thumb, index) => {
+      thumb.addEventListener('click', () => {
+        currentIndex = index;
+        showImage(currentIndex);
+      });
+    });
+  </script>
+</body>
+</html>
